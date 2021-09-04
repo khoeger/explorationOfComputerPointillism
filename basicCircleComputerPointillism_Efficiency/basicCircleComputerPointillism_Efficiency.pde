@@ -50,33 +50,31 @@ void setup() {
 }
 void draw() {
 
-  while ( spotsDrawn % maxFrames < maxFrames -1) {
-    
-    push();
+  while ( spotsDrawn % maxFrames < maxFrames - 1) { // 
+
+    push();                                        // shift for border 
     translate(borderSpace, borderSpace);
 
     pickASpotToDraw();                             // choose spot
     rgbaColorLookup();                             // get color data
     drawShape();                                   // draw shape at location
-    
+    spotsDrawn += 1;                               // increment number of spotsDrawn
 
-    // Have drawn as many shapes as fit our limit - 1 shape per frame!
-
-
-    // increment number of spotsDrawn
-    spotsDrawn += 1;
-    pop();
+    pop();                                         // end shift for border
   }
-  if (spotsDrawn % maxFrames == maxFrames ) {
+  // Have drawn as many shapes as fit our limit - 1 shape per frame!
+  if (spotsDrawn % maxFrames == 1){
     // Record
     println(alphaValue, maxFrames);
     saveNamedFrame();
-    // increment values
-    alphaValue += 1;    // make paint more solid
-    shapeWidth -= shapeWidthIncrement;     // decrease shape size
-    shapeHeight -= shapeHeightIncrement;  
-    spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
-
+    incrementValues();
+  }
+  else if (spotsDrawn % maxFrames == maxFrames - 1 ) {
+    // Record
+    println(alphaValue, maxFrames);
+    saveNamedFrame();
+    incrementValues();
+    
     // We've drawn all the dots - the paint can't get any more solid / less opaque
     if (alphaValue >= 255) {
       println("DONE!");
@@ -97,23 +95,31 @@ void pickASpotToDraw() {
   loc = x + y*img.width;
 }
 
-void rgbaColorLookup(){
+void rgbaColorLookup() {
   // Look up the RGB color in the source image
-    loadPixels();
-    r = red(img.pixels[loc]);
-    g = green(img.pixels[loc]);
-    b = blue(img.pixels[loc]);
-    a = alpha(img.pixels[loc]);
+  loadPixels();
+  r = red(img.pixels[loc]);
+  g = green(img.pixels[loc]);
+  b = blue(img.pixels[loc]);
+  a = alpha(img.pixels[loc]);
 }
 
-void drawShape(){
+void drawShape() {
   // Draw an ellipse at that location with that color
-    scale(scalar);
-    if (a == 0) {
-    } else {
-      fill(r, g, b, alphaValue);
-      ellipse(x, y, shapeWidth, shapeHeight);
-    }
+  scale(scalar);
+  if (a == 0) {                            // if over transparent background
+  } else {
+    fill(r, g, b, alphaValue);
+    ellipse(x, y, shapeWidth, shapeHeight);
+  }
+}
+
+void incrementValues() {
+  // increment / reset values
+    alphaValue += 1;    // make paint more solid
+    shapeWidth -= shapeWidthIncrement;     // decrease shape size
+    shapeHeight -= shapeHeightIncrement;  
+    spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
 
 }
 
