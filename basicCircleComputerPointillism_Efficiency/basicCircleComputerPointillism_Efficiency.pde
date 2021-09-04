@@ -1,39 +1,47 @@
 /* 
- Emulate painting by covering with circles to make a picture
+ Emulate painting by covering with circles to make an output picture 
+ given a base picture.
+ 
+ Each layer of dots placed down takes up only a proportion of the
+ entire screen.
+ 
+ All dots of the same width are placed down at the same time.
  */
 
-color baseColor = color( 255, 255, 255);
+// -- Constants
+color baseColor = color( 255, 255, 255);                // background color
 
-float proportion = 0.0075;
+float proportion = 0.0075;                              // decimal rep. of percentage of total area to be covered   
 
-int maxShapeWidth = 255;
+float scalar = 1;                                       // if the base picture is small, how much to enlarge it
 
-int borderSpace = 150;
-
-int x, y, loc;
-float r, g, b, a;
-
-int shapeWidthIncrement = 1; 
-int shapeHeightIncrement = shapeWidthIncrement;
-int shapeWidth = maxShapeWidth;
-int shapeHeight = shapeWidth;
-
-float scalar = 1;
-float framesScalar = 1;
-
-String imageName = "publicDomainApple";
+String imageName = "publicDomainApple";                 // base picture name
 String imageType =".png";
 String imagePrefix ="../../resources/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
-PImage img;
-PImage particle1;
+int maxShapeWidth = 255;                                // maximum width of dot dimension
+int shapeWidthIncrement = 1;                            // width decreases by this
+int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
 
-int alphaValue = 0;
 
+int borderSpace = 150;                                  // width of the border, should be > maxShapeWidth / 2
+
+// -- Class instantiation
+PImage img;                                             // base image will be accessed here                                  
+
+// -- Variables 
+int x, y, loc;
+float r, g, b, a;
 int maxFrames;
-int spotsDrawn = 0;
 
+// -- Initializations of variables
+int alphaValue = 0;                                     // initial alpha value
+int spotsDrawn = 0;                                     // initial number of dots placed   
+int shapeWidth = maxShapeWidth;                         // initial shape width
+int shapeHeight = shapeWidth;                           // initial shape height
+
+// -- Processing Main Functions
 void setup() {
   size(1830, 1907);   // Dimensions of input image + 2*borderSpace
 
@@ -42,11 +50,12 @@ void setup() {
 
   // Calculate max frames
   maxFramesNow();
+  
   // Administrivia
   background(baseColor);
   smooth();
   noStroke();
-  //imageMode(CENTER);
+
 }
 void draw() {
   // -- Draw all sole spots of their size
