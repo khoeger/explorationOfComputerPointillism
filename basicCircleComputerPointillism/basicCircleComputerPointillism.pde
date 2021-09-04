@@ -4,7 +4,7 @@
 
 color baseColor = color( 255, 255, 255);
 
-float proportion = 0.01;
+float proportion = 0.005;
 
 int maxShapeWidth = 255;
 
