@@ -10,6 +10,9 @@ int maxShapeWidth = 255;
 
 int borderSpace = 150;
 
+int x, y, loc;
+float r, g, b, a;
+
 int shapeWidthIncrement = 1; 
 int shapeHeightIncrement = shapeWidthIncrement;
 int shapeWidth = maxShapeWidth;
@@ -29,7 +32,7 @@ PImage particle1;
 int alphaValue = 0;
 
 int maxFrames;
-int framesCounter = 0;
+int spotsDrawn = 0;
 
 void setup() {
   size(1830, 1907);   // Dimensions of input image + 2*borderSpace
@@ -46,32 +49,25 @@ void setup() {
   //imageMode(CENTER);
 }
 void draw() {
-  push();
-  translate(borderSpace, borderSpace);
 
-  // Pick a random point
-  int x = int(random(img.width));
-  int y = int(random(img.height));
-  int loc = x + y*img.width;
+  while ( spotsDrawn % maxFrames < maxFrames -1) {
+    
+    push();
+    translate(borderSpace, borderSpace);
 
-  // Look up the RGB color in the source image
-  loadPixels();
-  float r = red(img.pixels[loc]);
-  float g = green(img.pixels[loc]);
-  float b = blue(img.pixels[loc]);
-  float a = alpha(img.pixels[loc]);
+    pickASpotToDraw();                             // choose spot
+    rgbaColorLookup();                             // get color data
+    drawShape();                                   // draw shape at location
+    
 
-  // Draw an ellipse at that location with that color
-  scale(scalar);
-  if (a == 0) {
-  } else {
-    fill(r, g, b, alphaValue);
-    ellipse(x, y, shapeWidth, shapeHeight);
+    // Have drawn as many shapes as fit our limit - 1 shape per frame!
+
+
+    // increment number of spotsDrawn
+    spotsDrawn += 1;
+    pop();
   }
-  
-
-  // Have drawn as many shapes as fit our limit - 1 shape per frame!
-  if (framesCounter % maxFrames == maxFrames - 1) {
+  if (spotsDrawn % maxFrames == maxFrames ) {
     // Record
     println(alphaValue, maxFrames);
     saveNamedFrame();
@@ -79,7 +75,7 @@ void draw() {
     alphaValue += 1;    // make paint more solid
     shapeWidth -= shapeWidthIncrement;     // decrease shape size
     shapeHeight -= shapeHeightIncrement;  
-    framesCounter = 0;  // restart frame/shape counter - 1 shape per frame
+    spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
 
     // We've drawn all the dots - the paint can't get any more solid / less opaque
     if (alphaValue >= 255) {
@@ -92,10 +88,33 @@ void draw() {
       maxFramesNow();     // calculate number of shapes should draw next
     }
   }
+}
 
-  // increment number of frames
-  framesCounter += 1;
-  pop();
+void pickASpotToDraw() {
+  // Pick a random point
+  x = int(random(img.width));
+  y = int(random(img.height));
+  loc = x + y*img.width;
+}
+
+void rgbaColorLookup(){
+  // Look up the RGB color in the source image
+    loadPixels();
+    r = red(img.pixels[loc]);
+    g = green(img.pixels[loc]);
+    b = blue(img.pixels[loc]);
+    a = alpha(img.pixels[loc]);
+}
+
+void drawShape(){
+  // Draw an ellipse at that location with that color
+    scale(scalar);
+    if (a == 0) {
+    } else {
+      fill(r, g, b, alphaValue);
+      ellipse(x, y, shapeWidth, shapeHeight);
+    }
+
 }
 
 void mouseClicked() {       // so that we can see output, no matter where we are in loop
