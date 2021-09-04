@@ -23,14 +23,14 @@ Using this as a base, she started making changes with the code, slowly changing 
 #### Basic Code Available
 - Make picture using dots, watch dots appear one by one
 - Make picture using dots, faster / "efficiently"
-- Make picture using other shapes (needs to be added to only repo)
-- Make picture with different color background (needs to be added to only repo)
+- Make picture using other shapes (TO BE UPLOADED SHORTLY)
+- Make picture with different color background (TO BE UPLOADED SHORTLY)
 
 #### Not Yet Adequately Tested
 - More efficient method of determining number of dots placed
 
 ### Testing Limits
-In progress - Katarina is currently generating examples of what types of pictures works well with each type of code.
+(IN PROGRESS) Katarina is currently generating examples of what types of pictures works well with each type of code.
 She is also seeing what turns out poorly, and trying to figure out why.
 
 #### Observations:
