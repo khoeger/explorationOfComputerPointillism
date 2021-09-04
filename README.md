@@ -1,6 +1,7 @@
 # An Exploration of Computer Based Pointillism
 This repository contains code used in Katarina Hoeger's exploration of pointillism using a computer.
 
+![Red Dots of different sizes overlap on a white background to form an abstract apple](publicDomainAppleSample.jpg "Computer-Based Pointillism Apple")
 ## Why This Technique?
 
 ### Pointillism
