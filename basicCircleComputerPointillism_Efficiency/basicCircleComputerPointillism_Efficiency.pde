@@ -49,41 +49,46 @@ void setup() {
   //imageMode(CENTER);
 }
 void draw() {
-
-  while ( spotsDrawn % maxFrames < maxFrames - 1) { // 
-
+  // -- Draw all sole spots of their size
+  if ( maxFrames == 1) {
     push();                                        // shift for border 
     translate(borderSpace, borderSpace);
 
-    pickASpotToDraw();                             // choose spot
+    pickASpotToDraw();                             // choose place
     rgbaColorLookup();                             // get color data
     drawShape();                                   // draw shape at location
     spotsDrawn += 1;                               // increment number of spotsDrawn
 
-    pop();                                         // end shift for border
-  }
-  // Have drawn as many shapes as fit our limit - 1 shape per frame!
-  if (spotsDrawn % maxFrames == 1){
-    // Record
-    println(alphaValue, maxFrames);
-    saveNamedFrame();
-    incrementValues();
-  }
-  else if (spotsDrawn % maxFrames == maxFrames - 1 ) {
-    // Record
-    println(alphaValue, maxFrames);
-    saveNamedFrame();
-    incrementValues();
-    
-    // We've drawn all the dots - the paint can't get any more solid / less opaque
-    if (alphaValue >= 255) {
-      println("DONE!");
-      // save to documentation
-      saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+    pop(); 
 
-      exit();
-    } else {
-      maxFramesNow();     // calculate number of shapes should draw next
+    println(alphaValue, maxFrames);                // print statement
+    saveNamedFrame();                              // record
+    incrementValues();                             // get values ready for next shape
+
+    terminationCheck();                            // check - are we done?
+  } else {
+    // -- Draw multiple spots of same size
+    
+    // Draw all spots of size shapeWidth, shapeHeight
+    while ( spotsDrawn % maxFrames < maxFrames -1) { 
+      push();                                        // shift for border 
+      translate(borderSpace, borderSpace);
+
+      pickASpotToDraw();                             // choose place
+      rgbaColorLookup();                             // get color data
+      drawShape();                                   // draw shape at location
+      spotsDrawn += 1;                               // increment number of spotsDrawn
+
+      pop();                                         // end shift for border
+    }
+    
+    // After drawing all spots
+    if (spotsDrawn % maxFrames == maxFrames - 1 ) {
+      println(alphaValue, maxFrames);                // print statement
+      saveNamedFrame();                              // record
+      incrementValues();                             // get values ready for next shape
+
+      terminationCheck();                            // check - are we done?
     }
   }
 }
@@ -116,11 +121,23 @@ void drawShape() {
 
 void incrementValues() {
   // increment / reset values
-    alphaValue += 1;    // make paint more solid
-    shapeWidth -= shapeWidthIncrement;     // decrease shape size
-    shapeHeight -= shapeHeightIncrement;  
-    spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
+  alphaValue += 1;    // make paint more solid
+  shapeWidth -= shapeWidthIncrement;     // decrease shape size
+  shapeHeight -= shapeHeightIncrement;  
+  spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
+}
 
+void terminationCheck() {
+  // We've drawn all the dots - the paint can't get any more solid / less opaque
+  if (alphaValue >= 255) {
+    println("DONE!");
+    // save to documentation
+    saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+
+    exit();
+  } else {
+    maxFramesNow();     // calculate number of shapes should draw next
+  }
 }
 
 void mouseClicked() {       // so that we can see output, no matter where we are in loop
