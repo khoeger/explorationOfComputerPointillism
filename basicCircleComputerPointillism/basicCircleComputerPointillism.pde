@@ -84,6 +84,9 @@ void draw() {
     // We've drawn all the dots - the paint can't get any more solid / less opaque
     if (alphaValue >= 255) {
       println("DONE!");
+      // save to documentation
+      saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+
       exit();
     } else {
       maxFramesNow();     // calculate number of shapes should draw next
@@ -105,5 +108,5 @@ void maxFramesNow() {      // calculate the number of frames to draw
 }
 
 void saveNamedFrame() {    // save file
-  saveFrame(imageName+"/"+str(proportion)+"/"+str(maxShapeWidth)+"/"+hex(baseColor)+"/"+prefix+imageName+"_"+"_"+str(alphaValue)+"_"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+  saveFrame("outputs/"+imageName+"/"+str(proportion)+"_"+str(width)+"x"+str(height)+"/"+hex(baseColor)+"/"+str(maxShapeWidth)+"/"+prefix+imageName+"_"+"_"+str(alphaValue)+"_"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
 }
