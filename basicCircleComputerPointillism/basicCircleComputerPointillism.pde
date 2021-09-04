@@ -10,6 +10,9 @@ int maxShapeWidth = 255;
 
 int borderSpace = 150;
 
+int x, y, loc;
+float r, g, b, a;
+
 int shapeWidthIncrement = 1; 
 int shapeHeightIncrement = shapeWidthIncrement;
 int shapeWidth = maxShapeWidth;
@@ -29,10 +32,10 @@ PImage particle1;
 int alphaValue = 0;
 
 int maxFrames;
-int framesCounter = 0;
+int spotsDrawn = 0;
 
 void setup() {
-  size(1830, 1907);   // Dimensions of input image + *borderSpace
+  size(1830, 1907);   // Dimensions of input image + 2*borderSpace
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
@@ -46,56 +49,71 @@ void setup() {
   //imageMode(CENTER);
 }
 void draw() {
-  push();
+  push();                                        // shift for border 
   translate(borderSpace, borderSpace);
 
-  // Pick a random point
-  int x = int(random(img.width));
-  int y = int(random(img.height));
-  int loc = x + y*img.width;
+  pickASpotToDraw();                             // choose place
+  rgbaColorLookup();                             // get color data
+  drawShape();                                   // draw shape at location
+  spotsDrawn += 1;                               // increment number of spotsDrawn
 
+  pop();                                         // end shift for border
+
+  // After drawing all spots
+  if (spotsDrawn % maxFrames == maxFrames - 1 ) {
+    println(alphaValue, maxFrames);                // print statement
+    saveNamedFrame();                              // record
+    incrementValues();                             // get values ready for next shape
+
+    terminationCheck();                            // check - are we done?
+  }
+}
+
+void pickASpotToDraw() {
+  // Pick a random point
+  x = int(random(img.width));
+  y = int(random(img.height));
+  loc = x + y*img.width;
+}
+
+void rgbaColorLookup() {
   // Look up the RGB color in the source image
   loadPixels();
-  float r = red(img.pixels[loc]);
-  float g = green(img.pixels[loc]);
-  float b = blue(img.pixels[loc]);
-  float a = alpha(img.pixels[loc]);
+  r = red(img.pixels[loc]);
+  g = green(img.pixels[loc]);
+  b = blue(img.pixels[loc]);
+  a = alpha(img.pixels[loc]);
+}
 
+void drawShape() {
   // Draw an ellipse at that location with that color
   scale(scalar);
-  if (a == 0) {
+  if (a == 0) {                            // if over transparent background
   } else {
     fill(r, g, b, alphaValue);
     ellipse(x, y, shapeWidth, shapeHeight);
   }
-  
+}
 
-  // Have drawn as many shapes as fit our limit - 1 shape per frame!
-  if (framesCounter % maxFrames == maxFrames - 1) {
-    // Record
-    println(alphaValue, maxFrames);
-    saveNamedFrame();
-    // increment values
-    alphaValue += 1;    // make paint more solid
-    shapeWidth -= shapeWidthIncrement;     // decrease shape size
-    shapeHeight -= shapeHeightIncrement;  
-    framesCounter = 0;  // restart frame/shape counter - 1 shape per frame
+void incrementValues() {
+  // increment / reset values
+  alphaValue += 1;    // make paint more solid
+  shapeWidth -= shapeWidthIncrement;     // decrease shape size
+  shapeHeight -= shapeHeightIncrement;  
+  spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
+}
 
-    // We've drawn all the dots - the paint can't get any more solid / less opaque
-    if (alphaValue >= 255) {
-      println("DONE!");
-      // save to documentation
-      saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+void terminationCheck() {
+  // We've drawn all the dots - the paint can't get any more solid / less opaque
+  if (alphaValue >= 255) {
+    println("DONE!");
+    // save to documentation
+    saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
 
-      exit();
-    } else {
-      maxFramesNow();     // calculate number of shapes should draw next
-    }
+    exit();
+  } else {
+    maxFramesNow();     // calculate number of shapes should draw next
   }
-
-  // increment number of frames
-  framesCounter += 1;
-  pop();
 }
 
 void mouseClicked() {       // so that we can see output, no matter where we are in loop

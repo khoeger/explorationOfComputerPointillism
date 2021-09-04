@@ -59,7 +59,7 @@ void draw() {
     drawShape();                                   // draw shape at location
     spotsDrawn += 1;                               // increment number of spotsDrawn
 
-    pop(); 
+    pop();                                         // end shift for border
 
     println(alphaValue, maxFrames);                // print statement
     saveNamedFrame();                              // record
