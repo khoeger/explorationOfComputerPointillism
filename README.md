@@ -19,9 +19,30 @@ Using this as a base, she started making changes with the code, slowly changing 
 - Computer users can take advantage of pseudorandom numbers to generate unique but recognizably similar in style copies of the original picture.
 
 ## Code-based Exploration
-
 ### Code Types
+#### Basic Code Available
+- Make picture using dots
+- Make picture using other shapes (needs to be added to only repo)
+- Make picture with different color background (needs to be added to only repo)
+
+#### Not Yet Adequately Tested
+- More efficient method of determining number of dots placed
 
 ### Testing Limits
+In progress - Katarina is currently generating examples of what types of pictures works well with each type of code.
+She is also seeing what turns out poorly, and trying to figure out why.
+
+#### Observations:
+- Fantastic clouds, gravel, and general landscapes
+- Best with high contrasting colors
+- Best outcomes when granularity is large
+- Lines are difficult to perceive
+- Shape choice effects picture output greatly
+- Watching dots getting placed is interesting
 
 ### To Do
+- Code where multiple dots are placed before new frame may be more efficient
+- Automatically choose background color with k-means clustering
+- 3D dots
+- Moving dots
+- Shaders to produce dots
