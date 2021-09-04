@@ -32,7 +32,7 @@ int maxFrames;
 int framesCounter = 0;
 
 void setup() {
-  size(1830, 1907);   // Dimensions of input image + *borderSpace
+  size(1830, 1907);   // Dimensions of input image + 2*borderSpace
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
