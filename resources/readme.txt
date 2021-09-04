@@ -1,0 +1,1 @@
+Source of publicDomainApple: https://static.pexels.com/photos/211352/pexels-photo-211352.png
