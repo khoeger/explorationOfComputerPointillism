@@ -21,7 +21,8 @@ Using this as a base, she started making changes with the code, slowly changing 
 ## Code-based Exploration
 ### Code Types
 #### Basic Code Available
-- Make picture using dots
+- Make picture using dots, watch dots appear one by one
+- Make picture using dots, faster / "efficiently"
 - Make picture using other shapes (needs to be added to only repo)
 - Make picture with different color background (needs to be added to only repo)
 
@@ -41,7 +42,6 @@ She is also seeing what turns out poorly, and trying to figure out why.
 - Watching dots getting placed is interesting
 
 ### To Do
-- Code where multiple dots are placed before new frame may be more efficient
 - Automatically choose background color with k-means clustering
 - 3D dots
 - Moving dots
