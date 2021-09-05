@@ -18,6 +18,12 @@ Using this as a base, she started making changes with the code, slowly changing 
 - A picture is a dataset. If you can access the Red, Green, Blue, and Alpha values of a reference picture, you can use that data to construct a facsimile of the picture.
 - Computer users can take advantage of pseudorandom numbers to generate unique but recognizably similar in style copies of the original picture.
 
+## Message to Users
+If you use this code, I would appreciate seeing any output you share.
+Feel free to contact me here, tweet at or dm me on [twitter](https://twitter.com/kfhoeger), or email me at [katarina@katarinahoeger.com](mailto:katarina@katarinahoeger.com).
+Feel free to share suggestions about how to make this repo easier to use / more accessible.
+It is the first repo I have worked on that I could potentially see others using. 
+
 ## Code-based Exploration
 ### Code Types
 #### Basic Code Available
