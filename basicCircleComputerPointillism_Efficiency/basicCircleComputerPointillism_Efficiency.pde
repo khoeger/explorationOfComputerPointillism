@@ -11,7 +11,7 @@
 // -- Constants
 color baseColor = color( 255, 255, 255);                // background color
 
-float proportion = 0.0075;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.015;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                       // if the base picture is small, how much to enlarge it
 
@@ -70,8 +70,8 @@ void draw() {
 
     pop();                                         // end shift for border
 
-    println(alphaValue, maxFrames);                // print statement
-    saveNamedFrame();                              // record
+    //println(alphaValue, maxFrames);                // print statement
+    //saveNamedFrame();                              // record
     incrementValues();                             // get values ready for next shape
 
     terminationCheck();                            // check - are we done?
@@ -93,8 +93,8 @@ void draw() {
     
     // After drawing all spots
     if (spotsDrawn % maxFrames == maxFrames - 1 ) {
-      println(alphaValue, maxFrames);                // print statement
-      saveNamedFrame();                              // record
+      //println(alphaValue, maxFrames);                // print statement
+      //saveNamedFrame();                              // record
       incrementValues();                             // get values ready for next shape
 
       terminationCheck();                            // check - are we done?
