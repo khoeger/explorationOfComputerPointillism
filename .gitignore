@@ -1,13 +1,13 @@
 //
-basicCircleComputerPointillism/documentation/*.png
+basicCircleComputerPointillism/documentation/*
 basicCircleComputerPointillism/outputs/*
-basicCircleComputerPointillism/documentation/*.jpg
+basicCircleComputerPointillism/documentation/*
 basicCircleComputerPointillism/outputs/*
 
 
-basicCircleComputerPointillism_Efficiency/documentation/*.png
+basicCircleComputerPointillism_Efficiency/documentation/*
 basicCircleComputerPointillism_Efficiency/outputs/*
-basicCircleComputerPointillism_Efficiency/documentation/*.jpg
+basicCircleComputerPointillism_Efficiency/documentation/*
 basicCircleComputerPointillism_Efficiency/outputs/*
 
 resources/private
