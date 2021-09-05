@@ -22,20 +22,20 @@ Using this as a base, she started making changes with the code, slowly changing 
 If you use this code, I would appreciate seeing any output you share.
 Feel free to contact me here, tweet at or dm me on [twitter](https://twitter.com/kfhoeger), or email me at [katarina@katarinahoeger.com](mailto:katarina@katarinahoeger.com).
 Feel free to share suggestions about how to make this repo easier to use / more accessible.
-It is the first repo I have worked on that I could potentially see others using. 
+It is the first repo I have worked on that I could potentially see others using.
 
 ## Code-based Exploration
 ### Code Types
 #### Basic Code Available
 - Make picture using dots, watch dots appear one by one
 - Make picture using dots, faster / "efficiently"
-- Make picture using other shapes (needs to be added to only repo)
+- Make picture using other shapes (TO BE UPLOADED SHORTLY)
 
 #### Not Yet Adequately Tested
 - More efficient method of determining number of dots placed
 
 ### Testing Limits
-In progress - Katarina is currently generating examples of what types of pictures works well with each type of code.
+(IN PROGRESS) Katarina is currently generating examples of what types of pictures works well with each type of code.
 She is also seeing what turns out poorly, and trying to figure out why.
 
 #### Observations:
