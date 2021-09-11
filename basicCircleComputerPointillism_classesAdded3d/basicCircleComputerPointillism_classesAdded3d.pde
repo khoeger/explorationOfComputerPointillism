@@ -92,7 +92,7 @@ void draw() {
 
     terminationCheck();                            // check - are we done?
   }
-   camera(mouseX, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+   camera(mouseX, mouseY, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
 }
 
 // -- Helper Functions 
