@@ -7,6 +7,15 @@
  
  Dots are placed one at a time
  - Add classes
+ 
+ // To be done soon -
+ 
+ - figure out how how to make it stick around afterwards
+ - speed it up.. no need to use slow version for this at moment
+ - make sure I can save it as a 3d object
+ - maybe there's a way to save the classes so I don't need to render from scratch each time?
+ 
+ 
  */
 
 // -- Constants
@@ -75,7 +84,7 @@ void draw() {
 
   pickASpotToDraw();                             // choose place
   rgbaColorLookup();                             // get color data
-  drawShape();                                   // draw shape at location
+  createSphere();                                // draw sphere at location
   for (Dot dot : dotsBucket ){
     dot.display();
     dot.move();
@@ -112,8 +121,8 @@ void rgbaColorLookup() {
   a = alpha(img.pixels[loc]);
 }
 
-void drawShape() {
-  // Draw an ellipse at that location with that color
+void createSphere() {
+  // Draw a sphere at that location with that color
   scale(scalar);
   if (a == 0) {                            // if over transparent background
   } else {
