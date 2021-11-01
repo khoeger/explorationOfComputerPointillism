@@ -105,7 +105,7 @@ void setup() {
 
   resetShapeInputs();
 
-  randomSeed(seed);
+ 
 
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 }
@@ -434,4 +434,6 @@ void resetShapeInputs() {
   setShapeModes();
   smooth();
   noStroke();
+  
+   randomSeed(seed);
 }
