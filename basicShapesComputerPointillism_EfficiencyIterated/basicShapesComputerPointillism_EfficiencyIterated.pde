@@ -18,9 +18,10 @@ float proportion = 0.005;                              // decimal rep. of percen
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 int seed = 1234567890;
 
+String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ str(hour() )+ "_" + str(minute());
 String imageName = "artichokeBee";                    // base picture name
 //String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
-String imageType =".jpg";
+String imageType =".JPG";
 String[] shapeOptions = { "circle", // 0
   "ellipse", // 1  
   "ellipseRotate", // 2 
@@ -38,7 +39,8 @@ String[] shapeOptions = { "circle", // 0
   "square", // 14 
   "squareRotate" //15
 };
-String shapeType = shapeOptions[15];
+int shapeTypeIndex = 0;
+String shapeType;// = shapeOptions[15];
 //String imagePrefix ="../../resources/";
 //String imagePrefix = "../../../resources/";
 String imagePrefix = "../../../resources/2592x1728/";
@@ -55,11 +57,11 @@ int borderSpace = 300;                                  // width of the border, 
 // -- Class instantiation
 PImage img;    // base image will be accessed here  
 
-String component1 = imagePrefix + "/soccerSources/" + "soccerBallWhite.png";
-String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
-PImage componentImg1, componentImg2;
+//String component1 = imagePrefix + "/soccerSources/" + "soccerBallWhite.png";
+//String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
+//PImage componentImg1, componentImg2;
 
-PImage components[];
+//PImage components[];
 
 // -- Variables 
 int x, y, loc;
@@ -72,42 +74,37 @@ int spotsDrawn = 0;                                     // initial number of dot
 int shapeWidth = maxShapeWidth;                         // initial shape width
 int shapeHeight = maxShapeHeight;                           // initial shape height
 
+String frameName;
+
 // -- Processing Main Functions
 void setup() {
   //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
   //size( displayHeight, displayHeight); // min Dimension of image, twice
   //size(4908, 3756);   
-  //size(2892, 2028);
+  size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
-  size(2162, 2101);
+  //size(2162, 2101);
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
   //img.resize(0, height - 2* borderSpace);
   //img.resize( width - 2* borderSpace, 0);
 
-  componentImg1 = loadImage(component1);
-  //componentImg1.resize(shapeWidth, 0);
-  componentImg1.resize(0, shapeWidth);
-  componentImg2 = loadImage(component2);
-  //componentImg1.resize(shapeWidth, 0);
-  componentImg2.resize(0, shapeWidth);
+  //componentImg1 = loadImage(component1);
+  ////componentImg1.resize(shapeWidth, 0);
+  //componentImg1.resize(0, shapeWidth);
+  //componentImg2 = loadImage(component2);
+  ////componentImg1.resize(shapeWidth, 0);
+  //componentImg2.resize(0, shapeWidth);
 
 
-  components = new PImage [2];
-  components[0] = componentImg1;
-  components[1] = componentImg2;
+  //components = new PImage [2];
+  //components[0] = componentImg1;
+  //components[1] = componentImg2;
 
-  // Calculate max frames
-  maxFramesNow();
 
-  // Administrivia
-  background(baseColor);
+  resetShapeInputs();
 
-  setShapeModes();
-  //rectMode(CENTER);
-  smooth();
-  noStroke();
   randomSeed(seed);
 
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
@@ -235,7 +232,8 @@ void drawShape() {
       ellipse(0, 0, shapeWidth, shapeHeight);
       pop();
       pop();
-    } else if (shapeType == "imageIn") {
+    } /*
+    else if (shapeType == "imageIn") {
       push();                                        // shift for border 
       translate(borderSpace, borderSpace);
       push();
@@ -272,23 +270,24 @@ void drawShape() {
       pop();
       pop();
       pop();
-    } else if (shapeType == "line") {
+    }*/ else if (shapeType == "line") {
       push();                                        // shift for border 
       translate(borderSpace, borderSpace);
       push();
       translate( x, y );      
       stroke(r, g, b, alphaValue);
-      line(-shapeWidth/2, -shapeHeight/2, shapeWidth/2, shapeHeight/2);
+      line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
       pop();
-    } else if (shapeType == "lineRotate") {
+    } 
+    else if (shapeType == "lineRotate") {
       push();                                        // shift for border 
       translate(borderSpace, borderSpace);
       push();
       translate( x, y );      
       stroke(r, g, b, alphaValue);
       rotate(random(2*PI));
-      line(-shapeWidth/2, -shapeHeight/2, shapeWidth/2, shapeHeight/2);
+      line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
       pop();
     } else if (shapeType == "lineWeight") {
@@ -298,7 +297,7 @@ void drawShape() {
       translate( x, y );      
       stroke(r, g, b, alphaValue);
       strokeWeight(alphaValue/100 + random(10));
-      line(-shapeWidth/2, -shapeHeight/2, shapeWidth/2, shapeHeight/2);
+      line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
       pop();
     } else if (shapeType == "lineWeightRotate") {
@@ -309,7 +308,7 @@ void drawShape() {
       stroke(r, g, b, alphaValue);
       strokeWeight(alphaValue/100 + random(10));
       rotate(random(2*PI));
-      line(-shapeWidth/2, -shapeHeight/2, shapeWidth/2, shapeHeight/2);
+      line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
       pop();
     } else if (shapeType == "rect") {
@@ -383,8 +382,8 @@ void incrementValues() {
   shapeWidth -= shapeWidthIncrement;     // decrease shape size
   shapeHeight -= shapeHeightIncrement;  
   spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
-  components[0].resize(0, shapeWidth); // resize image
-  components[1].resize(0, shapeWidth); // resize image
+  //components[0].resize(0, shapeWidth); // resize image
+  //components[1].resize(0, shapeWidth); // resize image
   println("alpha:", alphaValue, "runtime:", str(millis()* 1/1000 * 1/60)+" minutes");
 }
 
@@ -393,11 +392,10 @@ void terminationCheck() {
   if (alphaValue >= 255) {
     println("DONE!", proportion, str(millis()* 1/1000 * 1/60)+" minutes" );// millis * 1/1000 = seconds ; seconds * 1/60 = minutes
     // save to documentation
-    saveFrame("documentation/"+shapeType+"/"+imageName+"_"+shapeType+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
-    println("Saved to");
-    println("documentation/"+shapeType+"/"+imageName+"_"+shapeType+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
-
-    exit();
+    frameName = "documentation/"+imageName+"/"+initialDateTime+"/"+imageName+"_"+initialDateTime+"_"+shapeType+"_"+str(proportion)+".jpg";
+    saveNamedFrame( frameName );
+    shapeTypeIndex ++;
+    resetShapeInputs();
   } else {
     maxFramesNow();     // calculate number of shapes should draw next
   }
@@ -405,13 +403,35 @@ void terminationCheck() {
 
 void mouseClicked() {       // so that we can see output, no matter where we are in loop
   println("Mouse Clicked!");
-  saveNamedFrame();
+  frameName = "documentation/"+imageName+"/"+initialDateTime+"/"+imageName+"_"+initialDateTime+"_"+shapeType+"_"+str(proportion)+".jpg";
+  saveNamedFrame(frameName);
 }
 
 void maxFramesNow() {      // calculate the number of frames to draw
   maxFrames = ceil(( width * height / (shapeWidth * shapeHeight))*proportion);
 }
 
-void saveNamedFrame() {    // save file
-  saveFrame("outputs/"+imageName+"/"+str(proportion)+"_"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_"+str(maxShapeWidth)+"/"+prefix+imageName+"_"+"_"+str(alphaValue)+"_"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+void saveNamedFrame( String frameName ) {    // save file
+  saveFrame(frameName);
+  println("saved to: ", frameName);
+ }
+
+
+void resetShapeInputs() {
+  alphaValue = 0;                                     // initial alpha value
+  spotsDrawn = 0;                                     // initial number of dots placed   
+  shapeWidth = maxShapeWidth;                         // initial shape width
+  shapeHeight = maxShapeHeight;   
+
+  if ( shapeTypeIndex < shapeOptions.length ) {
+    shapeType = shapeOptions[shapeTypeIndex];
+  } else {
+    exit();
+  }
+  
+  background(baseColor);
+  maxFramesNow();
+  setShapeModes();
+  smooth();
+  noStroke();
 }
