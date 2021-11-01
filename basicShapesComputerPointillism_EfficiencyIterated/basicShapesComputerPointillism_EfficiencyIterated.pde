@@ -18,7 +18,7 @@ float proportion = 0.005;                              // decimal rep. of percen
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 int seed = 1234567890;
 
-String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ str(hour() )+ "_" + str(minute());
+String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ "_" + str(hour() )+ "_" + str(minute());
 String imageName = "artichokeBee";                    // base picture name
 //String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
 String imageType =".JPG";
