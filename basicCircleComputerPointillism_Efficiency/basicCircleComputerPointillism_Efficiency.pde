@@ -9,13 +9,13 @@
  */
 
 // -- Constants
-color baseColor = color( 255, 255, 255);                // background color
+color baseColor = color( 255 );                       // background color
 
-float proportion = 0.015;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.01;                              // decimal rep. of percentage of total area to be covered   
 
-float scalar = 1;                                       // if the base picture is small, how much to enlarge it
+float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 
-String imageName = "publicDomainApple";                 // base picture name
+String imageName = "private/earlyOctober_moneyTree";                    // base picture name
 String imageType =".png";
 String imagePrefix ="../../resources/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
@@ -43,10 +43,15 @@ int shapeHeight = shapeWidth;                           // initial shape height
 
 // -- Processing Main Functions
 void setup() {
-  size(1830, 1907);   // Dimensions of input image + 2*borderSpace
-
+  //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
+  //size( displayHeight, displayHeight); // min Dimension of image, twice
+  //size( 2892, 2028);  // carp
+  size(4140, 4140);  
+ 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
+  //img.resize(0, height - 2* borderSpace);
+  //img.resize( width - 2* borderSpace, 0);
 
   // Calculate max frames
   maxFramesNow();
@@ -55,6 +60,8 @@ void setup() {
   background(baseColor);
   smooth();
   noStroke();
+  
+  println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 
 }
 void draw() {
@@ -134,12 +141,13 @@ void incrementValues() {
   shapeWidth -= shapeWidthIncrement;     // decrease shape size
   shapeHeight -= shapeHeightIncrement;  
   spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
+  println("alpha:",alphaValue, "runtime:", str(millis()* 1/1000 * 1/60)+" minutes");
 }
 
 void terminationCheck() {
   // We've drawn all the dots - the paint can't get any more solid / less opaque
   if (alphaValue >= 255) {
-    println("DONE!");
+    println("DONE!", proportion, str(millis()* 1/1000 * 1/60)+" minutes" );// millis * 1/1000 = seconds ; seconds * 1/60 = minutes
     // save to documentation
     saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
 
@@ -159,5 +167,5 @@ void maxFramesNow() {      // calculate the number of frames to draw
 }
 
 void saveNamedFrame() {    // save file
-  saveFrame("outputs/"+imageName+"/"+str(proportion)+"_"+str(width)+"x"+str(height)+"/"+hex(baseColor)+"/"+str(maxShapeWidth)+"/"+prefix+imageName+"_"+"_"+str(alphaValue)+"_"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
+  saveFrame("outputs/"+imageName+"/"+str(proportion)+"_"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_"+str(maxShapeWidth)+"/"+prefix+imageName+"_"+"_"+str(alphaValue)+"_"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
 }

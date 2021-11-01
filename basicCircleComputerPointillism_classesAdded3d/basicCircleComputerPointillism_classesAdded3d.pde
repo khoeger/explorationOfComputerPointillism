@@ -25,9 +25,10 @@ float proportion = 0.0075;                              // decimal rep. of perce
 
 float scalar = 1;                                       // if the base picture is small, how much to enlarge it
 
-String imageName = "publicDomainApple";                 // base picture name
+String imageName = "pumpkin";                 // base picture name
 String imageType =".png";
-String imagePrefix ="../../resources/";
+//String imagePrefix ="../../resources/";
+String imagePrefix = "../../../resources/halloween/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
 int maxShapeWidth = 255;                                // maximum width of dot dimension
@@ -57,12 +58,12 @@ int shapeHeight = shapeWidth;
 
 // -- Processing Main Functions
 void setup() {
-  //size(1830, 1907, P3D);   // Dimensions of input image Apple + 2*borderSpace
+  //size(1141, 1020, P3D);   // Dimensions of input image Apple + 2*borderSpace
   size( displayHeight , displayHeight, P3D); 
   
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
-  img.resize(0, displayHeight - 2* borderSpace);
+  img.resize(0, height - 2* borderSpace);
   
   // create empty list of dots
   dotsBucket = new ArrayList<Dot>();
@@ -126,7 +127,7 @@ void createSphere() {
   scale(scalar);
   if (a == 0) {                            // if over transparent background
   } else {
-    Dot dotToAdd = new Dot( x, y, shapeWidth,  color(r, g, b, alphaValue));
+    Dot dotToAdd = new Dot( x, y, shapeWidth,  color(r, g, b, 255));//alphaValue));
     dotsBucket.add( dotToAdd );
   }
 }

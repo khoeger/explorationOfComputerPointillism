@@ -9,7 +9,7 @@
  */
 
 // -- Constants
-color baseColor = color( 255, 255, 255);                // background color
+color baseColor = color(0);                // background color
 
 float proportion = 0.0075;                              // decimal rep. of percentage of total area to be covered   
 
@@ -25,7 +25,7 @@ int shapeWidthIncrement = 1;                            // width decreases by th
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
 
 
-int borderSpace = 150;                                  // width of the border, should be > maxShapeWidth / 2
+int borderSpace = 300;                                  // width of the border, should be > maxShapeWidth / 2
 
 // -- Class instantiation
 PImage img;                                             // base image will be accessed here                                  
@@ -43,7 +43,8 @@ int shapeHeight = shapeWidth;                           // initial shape height
 
 // -- Processing Main Functions
 void setup() {
-  size(1830, 1907);   // Dimensions of input image + 2*borderSpace
+  size(1980, 2057);   // Dimensions of input image + 2*borderSpace
+  //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
