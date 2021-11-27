@@ -11,19 +11,19 @@
  */
 
 // -- Constants
-color baseColor = color( 0 );                       // background color
+color baseColor = color( 63, 60, 82 );                       // background color
 
-float proportion = 0.25;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.5;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 int seed = 1234567890;
 
 String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ "_" + str(hour() )+ "_" + str(minute());
-String image2 = "lotusPurple_1080.jpg";
-String image1 = "mountainsChina_1080.jpg";
-String shapeImg = "yumengJiang.png";//"gusuLan.png"; // 
+String image1 = "lotusPurple_1080.jpg";
+String image2 = "mountainsChina_1080.jpg";
+String shapeImg = "gusuLan.png"; // "yumengJiang.png";//
 String imageName = "lotusMountains"; //"artichokeBee";                    // base picture name
-float imageLikelihood = 0.05;
+float imageLikelihood = 0.005;
 PImage currentImage, shapeImage;
 //String imageType =".JPG";
 String[] shapeOptions = { "circle", // 0
@@ -50,7 +50,7 @@ String shapeType;// = shapeOptions[15];
 String imagePrefix = "../../resources/moDaoZuShi/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
-int maxShapeWidth = 256;                                // maximum width of dot dimension
+int maxShapeWidth = 256;//56;                                // maximum width of dot dimension
 int maxShapeHeight = maxShapeWidth +int(random(10, 50));
 int shapeWidthIncrement = 1;                            // width decreases by this
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
@@ -88,7 +88,7 @@ void setup() {
   //size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
-  size(displayWidth, displayHeight);
+  size(displayHeight, displayHeight);
 
   // load image
 
@@ -96,17 +96,21 @@ void setup() {
   println(imgName1);
   imgs[0] = loadImage(imgName1);
   println("pass");
-  imgs[0].resize(0, height - 2* borderSpace);
+  //imgs[0].resize(0, height - 2* borderSpace);
+  imgs[0].resize( height - 2* borderSpace, 0);
 
   String imgName2 = imagePrefix+image2;
   println(imgName2);
   imgs[1] = loadImage(imgName2);
   println("pass");
-  imgs[1].resize(0, height - 2* borderSpace);
+  //imgs[1].resize(0, height - 2* borderSpace);
+  imgs[1].resize(height - 2* borderSpace, 0);
 
   String shapeImagePath = imagePrefix + shapeImg;
   shapeImage = loadImage(shapeImagePath);
-  shapeImage.resize(0, height-2*borderSpace);
+  //shapeImage.resize(0, height-2*borderSpace);
+    shapeImage.resize(height-2*borderSpace, 0);
+
 
 
   //img.resize( width - 2* borderSpace, 0);
@@ -131,38 +135,35 @@ void setup() {
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 }
 void draw() {
-  // -- Draw all sole spots of their size
-  if ( maxFrames == 1) {
+  //// -- Draw all sole spots of their size
+  //if ( maxFrames == 1) {
 
 
-    pickASpotToDraw();                             // choose place
-    rgbaColorLookup();                             // get color data
-    drawShape();                                   // draw shape at location
-    spotsDrawn += 1;                               // increment number of spotsDrawn
+  //  pickASpotToDraw();                             // choose place
+  //  rgbaColorLookup();                             // get color data
+  //  drawShape();                                   // draw shape at location
+  //  spotsDrawn += 1;                               // increment number of spotsDrawn
 
-    // end shift for border
+  //  // end shift for border
 
-    //println(alphaValue, maxFrames);                // print statement
-    //saveNamedFrame();                              // record
-    incrementValues();                             // get values ready for next shape
+  //  //println(alphaValue, maxFrames);                // print statement
+  //  //saveNamedFrame();                              // record
+  //  incrementValues();                             // get values ready for next shape
 
-    terminationCheck();                            // check - are we done?
-  } else {
-    // -- Draw multiple spots of same size
+  //  terminationCheck();                            // check - are we done?
+  //} else {
+  //// -- Draw multiple spots of same size
 
-    // Draw all spots of size shapeWidth, shapeHeight
-    while ( spotsDrawn % maxFrames < maxFrames -1) { 
-      //push();                                        // shift for border 
-      //translate(borderSpace, borderSpace);
+  // // Draw all spots of size shapeWidth, shapeHeight
+  // while ( spotsDrawn % maxFrames < maxFrames -1) { 
+
 
       pickASpotToDraw();                             // choose place
       rgbaColorLookup();                             // get color data
       drawShape();                                   // draw shape at location
       spotsDrawn += 1;                               // increment number of spotsDrawn
 
-      //pop();                                         // end shift for border
-    }
-
+    //}
     // After drawing all spots
     if (spotsDrawn % maxFrames == maxFrames - 1 ) {
       //println(alphaValue, maxFrames);                // print statement
@@ -171,7 +172,9 @@ void draw() {
 
       terminationCheck();                            // check - are we done?
     }
-  }
+    
+    saveFrameName();
+  //}
 }
 
 void imageToDraw() {
@@ -277,8 +280,10 @@ void drawShape() {
   } else {
     push();                                        // shift for border 
     float centerScreenX = width / 2;
+    float centerScreenY = height / 2;
     float imgLeftX = centerScreenX - currentImage.width /2 ;
-    translate(imgLeftX, borderSpace);
+    float imgTopY = centerScreenY - currentImage.height /2 ;
+    translate(imgLeftX, imgTopY);
     if (shapeType == "circle") { 
       push();
       translate(x, y );
@@ -345,14 +350,14 @@ void drawShape() {
       push();
       translate( x, y );      
       stroke(r, g, b, alphaValue);
-      strokeWeight((255 - alphaValue)/100 + random(10));
+      strokeWeight((255 - alphaValue)/10);
       line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
     } else if (shapeType == "lineWeightRotate") {
       push();
       translate( x, y );      
       stroke(r, g, b, alphaValue);
-      strokeWeight((255 - alphaValue)/100 + random(10));
+      strokeWeight((255 - alphaValue)/10);
       rotate(random(2*PI));
       line(-min(shapeWidth, shapeHeight)/2, -min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2, min(shapeWidth, shapeHeight)/2);
       pop();
@@ -429,6 +434,10 @@ void terminationCheck() {
   }
 }
 
+void saveFrameName(){
+  frameName = "animation/"+imageName+"/"+shapeType+"/"+initialDateTime+"/"+imageName+"_"+initialDateTime+"_"+shapeType+"_"+str(proportion)+"_"+str(frameCount)+".jpg";
+  saveNamedFrame(frameName);
+}
 void mouseClicked() {       // so that we can see output, no matter where we are in loop
   println("Mouse Clicked!");
   frameName = "documentation/"+imageName+"/"+initialDateTime+"/"+imageName+"_"+initialDateTime+"_"+shapeType+"_"+str(proportion)+".jpg";
@@ -441,7 +450,7 @@ void maxFramesNow() {      // calculate the number of frames to draw
 
 void saveNamedFrame( String frameName ) {    // save file
   saveFrame(frameName);
-  println("saved to: ", frameName);
+  //println("saved to: ", frameName);
 }
 
 
