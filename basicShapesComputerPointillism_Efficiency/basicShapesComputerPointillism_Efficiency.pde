@@ -11,53 +11,53 @@
  */
 
 // -- Constants
-color baseColor = color( 0 );                       // background color
+color baseColor = color(0);//163, 189, 204);// 0 );                       // background color
 
-float proportion = 0.005;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.015;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
-int seed = 1234567890;
+int seed = 14121811;// 1234567890;//NMRK
 
-String imageName = "artichokeBee";                    // base picture name
+String imageName = "rainbowWall";                    // base picture name
 //String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
 String imageType =".jpg";
 String[] shapeOptions = { "circle", // 0
-  "ellipse", // 1  
-  "ellipseRotate", // 2 
-  //"imageIn", // 3
-  //"imageInRotate", // 4
-  //"imageInRotateFlip", // 5 BROKEN?
-  "line", // 6
-  "lineRotate", // 7
-  "lineWeight", // 8
-  "lineWeightRotate", // 9 
-  "rect", // 10 
-  "rectRotate", // 11
-  "triangle", // 12
-  "triangleRotate", // 13
+  //"ellipse", // 1  
+  //"ellipseRotate", // 2 
+  ////"imageIn", // 3
+  ////"imageInRotate", // 4
+  ////"imageInRotateFlip", // 5 BROKEN?
+  //"line", // 6
+  //"lineRotate", // 7
+  //"lineWeight", // 8
+  //"lineWeightRotate", // 9 
+  //"rect", // 10 
+  //"rectRotate", // 11
+  //"triangle", // 12
+  //"triangleRotate", // 13
   "square", // 14 
   "squareRotate" //15
 };
-String shapeType = shapeOptions[15];
-//String imagePrefix ="../../resources/";
+String shapeType = shapeOptions[0];//15];
+String imagePrefix ="../../resources/";
 //String imagePrefix = "../../../resources/";
-String imagePrefix = "../../../resources/2592x1728/";
+//String imagePrefix = "../../../resources/2592x1728/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
 int maxShapeWidth = 256;                                // maximum width of dot dimension
-int maxShapeHeight = maxShapeWidth +int(random(10, 50));
+int maxShapeHeight = maxShapeWidth;// +int(random(10, 50));
 int shapeWidthIncrement = 1;                            // width decreases by this
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
 
 
-int borderSpace = 300;                                  // width of the border, should be > maxShapeWidth / 2
+int borderSpace = 150;                                  // width of the border, should be > maxShapeWidth / 2
 
 // -- Class instantiation
 PImage img;    // base image will be accessed here  
 
-String component1 = imagePrefix + "/soccerSources/" + "soccerBallWhite.png";
-String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
-PImage componentImg1, componentImg2;
+//String component1 = imagePrefix + "/soccerSources/" + "soccerBallWhite.png";
+//String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
+//PImage componentImg1, componentImg2;
 
 PImage components[];
 
@@ -76,27 +76,31 @@ int shapeHeight = maxShapeHeight;                           // initial shape hei
 void setup() {
   //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
   //size( displayHeight, displayHeight); // min Dimension of image, twice
-  //size(4908, 3756);   
+  //size(4908, 3756); // LOTUS  
+   //size(9816,7512); // Double Lotus
+   //size(2503, 2503); //LOTUS CIRCLE
+   //size(5006, 5006); // Double Lotus circle
   //size(2892, 2028);
   //size(1200, 1164); // boccioniSmaller
-  size(2162, 2101);
+  //size(2162, 2101);
+  size(4908, 3756);   // Rainbow on wall 
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
   //img.resize(0, height - 2* borderSpace);
-  //img.resize( width - 2* borderSpace, 0);
+  img.resize( width - 2* borderSpace, 0);
 
-  componentImg1 = loadImage(component1);
-  //componentImg1.resize(shapeWidth, 0);
-  componentImg1.resize(0, shapeWidth);
-  componentImg2 = loadImage(component2);
-  //componentImg1.resize(shapeWidth, 0);
-  componentImg2.resize(0, shapeWidth);
+  //componentImg1 = loadImage(component1);
+  ////componentImg1.resize(shapeWidth, 0);
+  //componentImg1.resize(0, shapeWidth);
+  //componentImg2 = loadImage(component2);
+  ////componentImg1.resize(shapeWidth, 0);
+  //componentImg2.resize(0, shapeWidth);
 
 
-  components = new PImage [2];
-  components[0] = componentImg1;
-  components[1] = componentImg2;
+  //components = new PImage [2];
+  //components[0] = componentImg1;
+  //components[1] = componentImg2;
 
   // Calculate max frames
   maxFramesNow();
@@ -235,7 +239,7 @@ void drawShape() {
       ellipse(0, 0, shapeWidth, shapeHeight);
       pop();
       pop();
-    } else if (shapeType == "imageIn") {
+    } /*else if (shapeType == "imageIn") {
       push();                                        // shift for border 
       translate(borderSpace, borderSpace);
       push();
@@ -272,7 +276,7 @@ void drawShape() {
       pop();
       pop();
       pop();
-    } else if (shapeType == "line") {
+    } */else if (shapeType == "line") {
       push();                                        // shift for border 
       translate(borderSpace, borderSpace);
       push();
@@ -383,8 +387,8 @@ void incrementValues() {
   shapeWidth -= shapeWidthIncrement;     // decrease shape size
   shapeHeight -= shapeHeightIncrement;  
   spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
-  components[0].resize(0, shapeWidth); // resize image
-  components[1].resize(0, shapeWidth); // resize image
+  //components[0].resize(0, shapeWidth); // resize image
+  //components[1].resize(0, shapeWidth); // resize image
   println("alpha:", alphaValue, "runtime:", str(millis()* 1/1000 * 1/60)+" minutes");
 }
 

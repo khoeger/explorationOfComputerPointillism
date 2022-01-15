@@ -11,25 +11,25 @@
  */
 
 // -- Constants
-color baseColor = color( 0 );                       // background color
+color baseColor = color(98,128,180);// 0 );                       // background color
 
-float proportion = 0.005;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.05;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
-int seed = 1234567890;
+int seed = 12081808 ; //LHRH
 
 String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ "_" + str(hour() )+ "_" + str(minute());
-String imageName = "artichokeBee";                    // base picture name
+String imageName = "larsRenataVerticalPicture";                    // base picture name
 //String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
-String imageType =".JPG";
-String[] shapeOptions = { "circle", // 0
-  "ellipse", // 1  
+String imageType =".jpg";
+String[] shapeOptions = {"circle", // 0
+  //"ellipse", // 1  
   "ellipseRotate", // 2 
   //"imageIn", // 3
   //"imageInRotate", // 4
   //"imageInRotateFlip", // 5 BROKEN?
-  "line", // 6
-  "lineRotate", // 7
+  //"line", // 6
+  //"lineRotate", // 7
   "lineWeight", // 8
   "lineWeightRotate", // 9 
   "rect", // 10 
@@ -41,9 +41,9 @@ String[] shapeOptions = { "circle", // 0
 };
 int shapeTypeIndex = 0;
 String shapeType;// = shapeOptions[15];
-//String imagePrefix ="../../resources/";
+String imagePrefix ="../../resources/";
 //String imagePrefix = "../../../resources/";
-String imagePrefix = "../../../resources/2592x1728/";
+//String imagePrefix = "../../../resources/2592x1728/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
 int maxShapeWidth = 256;                                // maximum width of dot dimension
@@ -52,7 +52,7 @@ int shapeWidthIncrement = 1;                            // width decreases by th
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
 
 
-int borderSpace = 300;                                  // width of the border, should be > maxShapeWidth / 2
+int borderSpace = 150;                                  // width of the border, should be > maxShapeWidth / 2
 
 // -- Class instantiation
 PImage img;    // base image will be accessed here  
@@ -81,14 +81,17 @@ void setup() {
   //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
   //size( displayHeight, displayHeight); // min Dimension of image, twice
   //size(4908, 3756);   
-  size(3192, 2328);
+  //size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
+    //size(2454,1878);//4908, 3756);   // Rainbow on wal
+ size(3072,4096); 
+
 
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
   //img.resize(0, height - 2* borderSpace);
-  //img.resize( width - 2* borderSpace, 0);
+  img.resize( width - 2* borderSpace, 0);
 
   //componentImg1 = loadImage(component1);
   ////componentImg1.resize(shapeWidth, 0);

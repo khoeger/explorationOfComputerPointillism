@@ -11,9 +11,9 @@
  */
 
 // -- Constants
-color baseColor = color( 63, 60, 82 );                       // background color
+color baseColor = color(0);//color( 63, 60, 82 );                       // background color
 
-float proportion = 0.5;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.015;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 int seed = 1234567890;
@@ -26,22 +26,23 @@ String imageName = "lotusMountains"; //"artichokeBee";                    // bas
 float imageLikelihood = 0.005;
 PImage currentImage, shapeImage;
 //String imageType =".JPG";
-String[] shapeOptions = { "circle", // 0
-  "ellipse", // 1  
-  "ellipseRotate", // 2 
+String[] shapeOptions = { 
+  //"circle", // 0
+  //"ellipse", // 1  
+  //"ellipseRotate", // 2 
   //"imageIn", // 3
   //"imageInRotate", // 4
   //"imageInRotateFlip", // 5 BROKEN?
-  "line", // 6
-  "lineRotate", // 7
-  "lineWeight", // 8
+  //"line", // 6
+  //"lineRotate", // 7
+  //"lineWeight", // 8
   "lineWeightRotate", // 9 
-  "rect", // 10 
-  "rectRotate", // 11
-  "triangle", // 12
-  "triangleRotate", // 13
-  "square", // 14 
-  "squareRotate" //15
+  //"rect", // 10 
+  //"rectRotate", // 11
+  //"triangle", // 12
+  //"triangleRotate", // 13
+  //"square", // 14 
+  //"squareRotate" //15
 };
 int shapeTypeIndex = 0;
 String shapeType;// = shapeOptions[15];
@@ -76,9 +77,11 @@ int maxFrames;
 int alphaValue = 0;                                     // initial alpha value
 int spotsDrawn = 0;                                     // initial number of dots placed   
 int shapeWidth = maxShapeWidth;                         // initial shape width
-int shapeHeight = maxShapeHeight;                           // initial shape height
+int shapeHeight = maxShapeHeight; // initial shape height
 
 String frameName;
+
+float imageScale = 2;
 
 // -- Processing Main Functions
 void setup() {
@@ -88,7 +91,9 @@ void setup() {
   //size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
-  size(displayHeight, displayHeight);
+  
+  //size(displayHeight, displayHeight);
+  size(3240, 3240);
 
   // load image
 
@@ -135,6 +140,7 @@ void setup() {
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 }
 void draw() {
+  
   //// -- Draw all sole spots of their size
   //if ( maxFrames == 1) {
 
@@ -175,6 +181,7 @@ void draw() {
     
     saveFrameName();
   //}
+
 }
 
 void imageToDraw() {

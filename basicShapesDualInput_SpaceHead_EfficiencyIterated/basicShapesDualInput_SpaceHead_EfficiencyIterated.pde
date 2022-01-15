@@ -11,12 +11,12 @@
  */
 
 // -- Constants
-color baseColor = color(0);//63, 60, 82 );                       // background color
+color baseColor = color(255);//63, 60, 82 );                       // background color
 
-float proportion = 0.007;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.05;//float(8)/float(26);                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
-int seed = 1234567890;
+int seed = 110608;//0;
 
 String initialDateTime = str( year() )+ "_" +str( month() )+ "_" + str(day())+ "_" + str(hour() )+ "_" + str(minute());
 String firstName = "katarina";
@@ -25,30 +25,33 @@ String[] wordArray = {"K","A","T","A","R","I","N","A"};
 String altShape = "word";
 String placeHolderShape;
 
+PFont myFont;
+
+
 String personName = firstName + "_" + lastName;
-String image1 = personName+"_space.jpg";
-String image2 = personName+"_selfie.png";
+String image1 = personName+"_spaceCircle.png";
+String image2 = personName+"_selfieCircle.png";
 //String shapeImg = "gusuLan.png"; // "yumengJiang.png";//
 String imageName = personName+"_merged_"; //"artichokeBee";                    // base picture name
 float imageLikelihood = 0.005;
 PImage currentImage, shapeImage;
 //String imageType =".JPG";
 String[] shapeOptions = { "circle", // 0
-  "ellipse", // 1  
-  "ellipseRotate", // 2 
-  "imageIn", // 3
-  "imageInRotate", // 4
-  "imageInRotateFlip", // 5 BROKEN?
-  "line", // 6
-  "lineRotate", // 7
-  "lineWeight", // 8
-  "lineWeightRotate", // 9 
-  "rect", // 10 
-  "rectRotate", // 11
-  "triangle", // 12
-  "triangleRotate", // 13
-  "square", // 14 
-  "squareRotate" //15
+  //"ellipse", // 1  
+  //"ellipseRotate", // 2 
+  //"imageIn", // 3
+  //"imageInRotate", // 4
+  //"imageInRotateFlip", // 5 BROKEN?
+  //"line", // 6
+  //"lineRotate", // 7
+  //"lineWeight", // 8
+  //"lineWeightRotate", // 9 
+  //"rect", // 10 
+  //"rectRotate", // 11
+  //"triangle", // 12
+  //"triangleRotate", // 13
+  //"square", // 14 
+  //"squareRotate" //15
   //, "word"
 };
 int shapeTypeIndex = 0;
@@ -59,7 +62,7 @@ String shapeType;// = shapeOptions[15];
 String imagePrefix = "../../resources/mergeSpacePerson/"+personName+"/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
-int maxShapeWidth = 266;//56;                                // maximum width of dot dimension
+int maxShapeWidth = 256;//76;                                // maximum width of dot dimension
 int maxShapeHeight = maxShapeWidth +int(random(10, 50));
 int shapeWidthIncrement = 1;                            // width decreases by this
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
@@ -70,16 +73,16 @@ int borderSpace = 150;                                  // width of the border, 
 // -- Class instantiation
 PImage[] imgs = new PImage[2];    // base image will be accessed here  
 
-int numComponents = 4;
-String component1 = imagePrefix +  personName+"_item1.png";
-String component2 = imagePrefix +  personName+"_item2.png";
-String component3 = imagePrefix +  personName+"_item3.png";
-String component4 = imagePrefix +  personName+"_item4.png";
+//int numComponents = 4;
+//String component1 = imagePrefix +  personName+"_item1.png";
+//String component2 = imagePrefix +  personName+"_item2.png";
+//String component3 = imagePrefix +  personName+"_item3.png";
+//String component4 = imagePrefix +  personName+"_item4.png";
 
-//String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
-PImage componentImg1, componentImg2, componentImg3, componentImg4;
+////String component2 = imagePrefix + "/soccerSources/" + "playerWhite.png";
+//PImage componentImg1, componentImg2, componentImg3, componentImg4;
 
-PImage components[];
+//PImage components[];
 
 // -- Variables 
 int x, y, loc;
@@ -102,7 +105,8 @@ void setup() {
   //size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
-  size(displayHeight, displayHeight);
+  size(4000, 4000);//displayHeight, displayHeight);
+  imageMode(CENTER);
 
   // load image
 
@@ -131,33 +135,35 @@ void setup() {
   //img.resize( width - 2* borderSpace, 0);
 
 
-  componentImg1 = loadImage(component1);
-  componentImg1.resize(shapeWidth, 0);             // if narrower than tall
-  //componentImg1.resize(0, shapeHeight);          // if wider than tall
+  //componentImg1 = loadImage(component1);
+  //componentImg1.resize(shapeWidth, 0);             // if narrower than tall
+  ////componentImg1.resize(0, shapeHeight);          // if wider than tall
 
 
-  componentImg2 = loadImage(component2);
-  componentImg2.resize(shapeWidth, 0);             // if narrower than tall
-  //componentImg1.resize(0, shapeHeight);          // if wider than tall
+  //componentImg2 = loadImage(component2);
+  //componentImg2.resize(shapeWidth, 0);             // if narrower than tall
+  ////componentImg1.resize(0, shapeHeight);          // if wider than tall
 
-  componentImg3 = loadImage(component3);
-  //componentImg3.resize(shapeWidth, 0);             // if narrower than tall
-  componentImg3.resize(0, shapeHeight);          // if wider than tall
+  //componentImg3 = loadImage(component3);
+  ////componentImg3.resize(shapeWidth, 0);             // if narrower than tall
+  //componentImg3.resize(0, shapeHeight);          // if wider than tall
   
-  componentImg4 = loadImage(component4);
-  //componentImg4.resize(shapeWidth, 0);             // if narrower than tall
-  componentImg4.resize(0, shapeHeight);          // if wider than tall
+  //componentImg4 = loadImage(component4);
+  ////componentImg4.resize(shapeWidth, 0);             // if narrower than tall
+  //componentImg4.resize(0, shapeHeight);          // if wider than tall
   
-  components = new PImage [numComponents];
-  components[0] = componentImg1;
-  components[1] = componentImg2;//2;
-  components[2] = componentImg3;
-  components[3] = componentImg4;//2;
+  //components = new PImage [numComponents];
+  //components[0] = componentImg1;
+  //components[1] = componentImg2;//2;
+  //components[2] = componentImg3;
+  //components[3] = componentImg4;//2;
 
-
+  myFont = createFont("Twenty-Five Normal", floor( 0.45*min(width,height)));
+  textFont(myFont);
+  
   resetShapeInputs();
 
-
+  
 
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 }
@@ -342,7 +348,7 @@ void setShapeModes( String shapeType ) {
     rectMode(CENTER);
   }
   else if (shapeType == "word") {
-    textMode(CENTER);
+    //textMode(CENTER);
     textAlign(CENTER, CENTER);
   }
 
@@ -381,7 +387,7 @@ void drawShape(String inShape ) {
       ellipse(0, 0, shapeWidth, shapeHeight);
       pop();
     } 
-    else if (inShape == "imageIn") {
+    /*else if (inShape == "imageIn") {
      push();
      tint(r, g, b, alphaValue);
      translate( x, y );      
@@ -409,7 +415,7 @@ void drawShape(String inShape ) {
      image(components[round(random(-0.49, 1.49))], 0, 0);
      pop();
      pop();
-     }
+     }*/
     else if (inShape == "line") {
       push();
       translate( x, y );      
@@ -500,14 +506,14 @@ void incrementValues() {
   shapeHeight -= shapeHeightIncrement;  
   textSize( max(shapeWidth, shapeHeight) );
   spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
-  ////-- for wide images
-  components[2].resize(0, shapeHeight); // resize image
-  components[3].resize(0, shapeHeight); // resize image
-  ////--  for narrow images
-  components[0].resize(shapeWidth, 0);
-  components[1].resize(shapeWidth, 0);
-  //components[2].resize(shapeWidth, 0);
-  //components[3].resize(shapeWidth, 0);
+  //////-- for wide images
+  //components[2].resize(0, shapeHeight); // resize image
+  //components[3].resize(0, shapeHeight); // resize image
+  //////--  for narrow images
+  //components[0].resize(shapeWidth, 0);
+  //components[1].resize(shapeWidth, 0);
+  ////components[2].resize(shapeWidth, 0);
+  ////components[3].resize(shapeWidth, 0);
   println("alpha:", alphaValue, "runtime:", str(millis()* 1/1000 * 1/60)+" minutes");
 }
 
