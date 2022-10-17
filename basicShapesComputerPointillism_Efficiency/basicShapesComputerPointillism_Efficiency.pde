@@ -11,16 +11,23 @@
  */
 
 // -- Constants
-color baseColor = color(0);//163, 189, 204);// 0 );                       // background color
+color baseColor = color(255);//163, 189, 204);// 0 );                       // background color
 
-float proportion = 0.015;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.0125;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
-int seed = 14121811;// 1234567890;//NMRK
+int seed = 20221006;
+String[] wordArray = {"JAMES", "BEAU", "TURNER"};
+PFont myFont;
 
-String imageName = "rainbowWall";                    // base picture name
-//String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
+//headshots\KatarinaHoeger_Standard_ZoomedIn_PhotoArturoC.jpg
+//String imageName = "headshots/KatarinaHoeger_Standard_ZoomedIn_PhotoArturoC";                    // base picture name
+////String imageName = "umberto_boccioni-trivium-art-history";//"dynamism-of-a-soccer-player-digital-remastered-edition-umberto-boccioni";
+//String imageType =".jpg";
+String imageName = "businessCard/20_KatarinaHoeger_Opening4Alt";                    // base picture name
 String imageType =".jpg";
+
+
 String[] shapeOptions = { "circle", // 0
   //"ellipse", // 1  
   //"ellipseRotate", // 2 
@@ -35,22 +42,23 @@ String[] shapeOptions = { "circle", // 0
   //"rectRotate", // 11
   //"triangle", // 12
   //"triangleRotate", // 13
-  "square", // 14 
-  "squareRotate" //15
+  //"square", // 14 
+  //"squareRotate", //15
+  //"word"
 };
 String shapeType = shapeOptions[0];//15];
-String imagePrefix ="../../resources/";
+String imagePrefix ="../../../resources/";
 //String imagePrefix = "../../../resources/";
 //String imagePrefix = "../../../resources/2592x1728/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
-int maxShapeWidth = 256;                                // maximum width of dot dimension
+int maxShapeWidth = 512;   // 10 + 2 * 256 = 10 + 502                             // maximum width of dot dimension
 int maxShapeHeight = maxShapeWidth;// +int(random(10, 50));
-int shapeWidthIncrement = 1;                            // width decreases by this
+int shapeWidthIncrement = 2;                            // width decreases by this
 int shapeHeightIncrement = shapeWidthIncrement;         // height decreases by this
 
 
-int borderSpace = 150;                                  // width of the border, should be > maxShapeWidth / 2
+int borderSpace = 300;                                  // width of the border, should be > maxShapeWidth / 2
 
 // -- Class instantiation
 PImage img;    // base image will be accessed here  
@@ -83,12 +91,12 @@ void setup() {
   //size(2892, 2028);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
-  size(4908, 3756);   // Rainbow on wall 
-
+  size(  6144 , 4444 );   //5120 , 3420
   // load image
-  img = loadImage(imagePrefix+imageName+imageType);
-  //img.resize(0, height - 2* borderSpace);
-  img.resize( width - 2* borderSpace, 0);
+  img = loadImage( imagePrefix + imageName + imageType );
+  //img.resize( 0 , height - 2 * borderSpace );
+  //img.resize( width - 2* borderSpace, 0);
+  img.resize( width - 2* borderSpace , height - 2 * borderSpace ); // both 
 
   //componentImg1 = loadImage(component1);
   ////componentImg1.resize(shapeWidth, 0);
@@ -113,6 +121,9 @@ void setup() {
   smooth();
   noStroke();
   randomSeed(seed);
+  
+  myFont = createFont("Twenty-Five Normal", floor( 0.45*min(width,height)));
+  textFont(myFont);
 
   println("Start Time:", str(hour())+":"+ str(minute())+":"+str( second()));
 }
@@ -138,15 +149,15 @@ void draw() {
 
     // Draw all spots of size shapeWidth, shapeHeight
     while ( spotsDrawn % maxFrames < maxFrames -1) { 
-      //push();                                        // shift for border 
-      //translate(borderSpace, borderSpace);
+      push();                                        // BEGIN for border -- WORDS
+      //translate(borderSpace, borderSpace);           // shift for border -- WORDS
 
       pickASpotToDraw();                             // choose place
       rgbaColorLookup();                             // get color data
       drawShape();                                   // draw shape at location
       spotsDrawn += 1;                               // increment number of spotsDrawn
 
-      //pop();                                         // end shift for border
+      pop();                                         // END shift for border -- WORDS
     }
 
     // After drawing all spots
@@ -193,6 +204,9 @@ void setShapeModes() {
     ( shapeType == "squareRotate")
     ) {
     rectMode(CENTER);
+  } else if (shapeType == "word") {
+    //textMode(CENTER);
+    textAlign(CENTER, CENTER);
   }
 
   //  "triangle", // 12
@@ -378,6 +392,13 @@ void drawShape() {
       pop();
       pop();
     }
+    else if (shapeType == "word"){
+      push();
+      translate( x, y );    
+      fill(r, g, b, alphaValue);
+      text(wordArray[round(random(-0.49, wordArray.length -1 + 0.49))], 0, 0);
+      pop();      
+    }
   }
 }
 
@@ -389,6 +410,7 @@ void incrementValues() {
   spotsDrawn = 0;  // restart frame/shape counter - 1 shape per frame
   //components[0].resize(0, shapeWidth); // resize image
   //components[1].resize(0, shapeWidth); // resize image
+  textSize( max(shapeWidth, shapeHeight) );
   println("alpha:", alphaValue, "runtime:", str(millis()* 1/1000 * 1/60)+" minutes");
 }
 

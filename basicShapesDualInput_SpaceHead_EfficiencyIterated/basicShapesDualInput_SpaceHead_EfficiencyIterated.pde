@@ -27,10 +27,10 @@ String placeHolderShape;
 
 PFont myFont;
 
-
+// "headshots/KatarinaHoeger_Standard_ZoomedIn_PhotoArturoC";                    // base picture name
 String personName = firstName + "_" + lastName;
-String image1 = personName+"_spaceCircle.png";
-String image2 = personName+"_selfieCircle.png";
+String image1 = personName+"_space_whiteCircle.jpg";
+String image2 = personName+"_circle.png";
 //String shapeImg = "gusuLan.png"; // "yumengJiang.png";//
 String imageName = personName+"_merged_"; //"artichokeBee";                    // base picture name
 float imageLikelihood = 0.005;
@@ -105,7 +105,7 @@ void setup() {
   //size(3192, 2328);
   //size(1200, 1164); // boccioniSmaller
   //size(2162, 2101);
-  size(4000, 4000);//displayHeight, displayHeight);
+  size(5778, 5778);//displayHeight, displayHeight);
   imageMode(CENTER);
 
   // load image

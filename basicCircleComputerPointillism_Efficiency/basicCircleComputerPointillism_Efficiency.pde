@@ -8,15 +8,18 @@
  All dots of the same width are placed down at the same time.
  */
 
+//import processing.svg.*;
+
+
 // -- Constants
 color baseColor = color( 255 );                       // background color
 
-float proportion = 0.01;                              // decimal rep. of percentage of total area to be covered   
+float proportion = 0.0175;                              // decimal rep. of percentage of total area to be covered   
 
 float scalar = 1;                                     // if the base picture is small, how much to enlarge it
 
-String imageName = "private/earlyOctober_moneyTree";                    // base picture name
-String imageType =".png";
+String imageName = "DSCF1111";                    // base picture name
+String imageType =".JPG";
 String imagePrefix ="../../resources/";
 String prefix = str(year())+str(month())+str(day())+str(hour())+str(minute())+"/";
 
@@ -46,11 +49,13 @@ void setup() {
   //size(1830, 1907);   // Dimensions of input image + 2*borderSpace
   //size( displayHeight, displayHeight); // min Dimension of image, twice
   //size( 2892, 2028);  // carp
-  size(4140, 4140);  
+  //size(2644, 2644, SVG, "documentation/mileyBlackBackground.svg"); 
+  size(3756, 4908); 
+
  
   // load image
   img = loadImage(imagePrefix+imageName+imageType);
-  //img.resize(0, height - 2* borderSpace);
+  img.resize(0, height - 2* borderSpace);
   //img.resize( width - 2* borderSpace, 0);
 
   // Calculate max frames
@@ -150,7 +155,7 @@ void terminationCheck() {
     println("DONE!", proportion, str(millis()* 1/1000 * 1/60)+" minutes" );// millis * 1/1000 = seconds ; seconds * 1/60 = minutes
     // save to documentation
     saveFrame("documentation/"+imageName+"_"+str(proportion)+"_canvas"+str(width)+"x"+str(height)+"_"+hex(baseColor)+"_max"+str(maxShapeWidth)+"_min"+str(shapeWidth)+"x"+str(shapeHeight)+".jpg");
-
+   
     exit();
   } else {
     maxFramesNow();     // calculate number of shapes should draw next
